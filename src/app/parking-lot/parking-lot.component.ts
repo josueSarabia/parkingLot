@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FirebaseService} from '../firebase.service';
-import {take} from 'rxjs/operators';
+import { FirebaseService } from '../firebase.service';
 
 
 @Component({
@@ -10,7 +9,17 @@ import {take} from 'rxjs/operators';
 })
 export class ParkingLotComponent implements OnInit {
 
-  parkingLot: any[];
+  parkingLot: any[] = [
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } },
+    { empty: true, vehicle: { name: '' } }];
   Queue: any[];
 
   constructor(private firebase: FirebaseService) {
@@ -21,21 +30,20 @@ export class ParkingLotComponent implements OnInit {
   }
 
   loadInitialData() {
-    
-    this.firebase.getQueue().subscribe((listVehicles: any) => {
-      this.Queue = listVehicles;
-      if (this.parkingLot !== undefined ) {
-        console.log('me llamo cola');
-        this.moveFromQueueToParkingLot();
-      }
 
+    this.firebase.getQueue().subscribe((listVehicles: any) => {
+        this.Queue = listVehicles;
+        setTimeout(() => {
+          this.moveFromQueueToParkingLot();
+        }, 500);
     });
 
-    this.firebase.getParkingLot().subscribe(( (parkinlotFirebase) => {
+    this.firebase.getParkingLot().subscribe(((parkinlotFirebase) => {
       this.parkingLot = parkinlotFirebase;
       if (this.Queue !== undefined && parkinlotFirebase !== null) {
-        console.log('me llamo park');
-        this.moveFromQueueToParkingLot();
+        setTimeout(() => {
+          this.moveFromQueueToParkingLot();
+        }, 1000);
       }
     }));
 
@@ -43,16 +51,16 @@ export class ParkingLotComponent implements OnInit {
 
   moveFromQueueToParkingLot() {
     const sizeQueue = this.Queue.length;
-    console.log('me llame');
-    if ( sizeQueue > 0 ) {
-      const firstVehicle =  this.Queue[0];
+    if (sizeQueue > 0) {
+      const firstVehicle = this.Queue[0];
       const avalibleSpace = this.emptySpace(firstVehicle);
-      if (  avalibleSpace !== -1) {
+      if (avalibleSpace !== -1) {
         this.parkingLot[avalibleSpace].empty = false;
-        this.parkingLot[avalibleSpace].vehicle.id =  firstVehicle.vehicle.id;
-        this.parkingLot[avalibleSpace].vehicle.name =  firstVehicle.vehicle.name;
-        this.updateParkingLot();
+        this.parkingLot[avalibleSpace].vehicle.id = firstVehicle.vehicle.id;
+        this.parkingLot[avalibleSpace].vehicle.name = firstVehicle.vehicle.name;
         this.deleteFromQueue(firstVehicle.key);
+        this.updateParkingLot();
+
       }
     }
   }
@@ -86,7 +94,7 @@ export class ParkingLotComponent implements OnInit {
     let found = false;
     const size = this.parkingLot.length;
     while (i < size && !found) {
-      if (this.parkingLot[i].empty === true &&  types.indexOf(this.parkingLot[i].type) > -1 ) {
+      if (this.parkingLot[i].empty === true && types.indexOf(this.parkingLot[i].type) > -1) {
         avalibleSpace = i;
         found = true;
       }
@@ -95,9 +103,14 @@ export class ParkingLotComponent implements OnInit {
     return avalibleSpace; // if there isn't an avalible space return null
   }
 
+  isFirst( index: number) {
+    if (index === 0) {
+      return true;
+    }
+    return false;
+  }
+
   addVehicleToQueue(vehicle: string) {
-    console.log(this.parkingLot);
-    console.log(this.Queue);
     this.firebase.addVehiculeToQueueFirebase(vehicle);
   }
 
@@ -110,19 +123,21 @@ export class ParkingLotComponent implements OnInit {
   }
 
   deleteParkingLot() {
-    console.log(this.parkingLot);
-    console.log(this.Queue);
     this.firebase.generateEmptyParkingLot();
   }
 
   deleteVehicleParkingLot() {
-    console.log(this.parkingLot);
-    console.log(this.Queue);
-    const randomSpace = Math.floor(Math.random() * 10);
+    let randomSpace = Math.floor(Math.random() * 10);
+    while (this.parkingLot[randomSpace].empty) {
+      randomSpace = Math.floor(Math.random() * 10);
+    }
     this.parkingLot[randomSpace].empty = true;
-    this.parkingLot[randomSpace].vehicle.id =  -1;
+    this.parkingLot[randomSpace].vehicle.id = -1;
     this.parkingLot[randomSpace].vehicle.name = '';
-    this.updateParkingLot();
+
+    setTimeout(() => {
+      this.updateParkingLot();
+    }, 1000);
   }
 
 

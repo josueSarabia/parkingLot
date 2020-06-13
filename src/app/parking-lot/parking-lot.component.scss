@@ -1,0 +1,49 @@
+.hrGrey{
+    border: 1px solid grey;
+}
+
+.btn{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.parking{
+    background-color: #646569;
+    height: 80vh;
+    padding: 20px;
+}
+
+.firstRow{
+    padding-top: 20px;
+}
+
+.imgSize{
+    width: 128px; 
+    height: 128px;
+}
+
+.firstParkingLotTop{
+    border: 5px solid white;
+    border-top: none;
+    height: 200px;
+}
+
+.firstParkingLotBottom{
+    border: 5px solid white;
+    border-top: none;
+    border-bottom: none;
+    height: 200px;
+}
+
+.parkingLotTop{
+    border: 5px solid white;
+    border-top: none;
+    border-left: none;
+}
+
+.parkingLotBottom{
+    border: 5px solid white;
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+}

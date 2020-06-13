@@ -1,11 +1,87 @@
-<p>parking-lot works!</p>
-
 <select #selectVehiculos name="vehiculos" id="vehiculos">
     <option value="truck">Truck</option>
     <option value="motorcycle">Motorcycle</option>
     <option value="sedan">Sedan</option>
 </select>
 
-<button (click)="addVehicleToQueue(selectVehiculos.value)" >agregar vehiculo</button>
-<button (click)="deleteVehicleParkingLot()"> elminar vehiculo</button>
-<button (click)="deleteParkingLot()"> vaciar parqueadero</button>
+<button class="btn btn-secondary" (click)="addVehicleToQueue(selectVehiculos.value)" >Agregar vehiculo</button>
+<button class="btn btn-secondary" (click)="deleteVehicleParkingLot()"> Eliminar vehiculo del parqueadero</button>
+<button class="btn btn-secondary" (click)="deleteParkingLot()"> Vaciar parqueadero</button>
+
+<div class="container">
+    <div class="col parking">
+        <h1 class="text-white">Parqueadero</h1>
+        <div class="row firstRow" >
+
+            <div class="col justify-content-center firstParkingLotTop">
+                <p class=" text-white">Small</p>
+                <img *ngIf="!parkingLot[0].empty" class="imgSize" src="../../assets/img/moto.png" alt="motorcycle">
+            </div>
+            <div class="col parkingLotTop" >
+                <p class=" text-white">Small</p>
+                <img *ngIf="!parkingLot[1].empty" class="imgSize" src="../../assets/img/moto.png" alt="motorcycle">
+            </div>
+            <div class="col parkingLotTop">
+                <p class=" text-white">Small</p>
+                <img *ngIf="!parkingLot[2].empty" class="imgSize" src="../../assets/img/moto.png" alt="motorcycle">
+            </div>
+
+            <div class="col parkingLotTop">
+                <p class=" text-white">Medium</p>
+                <img *ngIf="!parkingLot[3].empty && parkingLot[3].vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle">
+                <img *ngIf="!parkingLot[3].empty && parkingLot[3].vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan" >
+            </div>
+            <div class="col parkingLotTop">
+                <p class=" text-white">Medium</p>
+                <img *ngIf="!parkingLot[4].empty && parkingLot[4].vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle"  >
+                <img *ngIf="!parkingLot[4].empty && parkingLot[4].vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan" >
+            </div>
+
+        </div>
+
+        <div class="row ">
+            <div class="col firstParkingLotBottom">
+                <p class=" text-white">Medium</p>
+                <img *ngIf="!parkingLot[5].empty && parkingLot[5].vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle"  >
+                <img *ngIf="!parkingLot[5].empty && parkingLot[5].vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan">
+            </div>
+            <div class="col parkingLotBottom">
+                <p class=" text-white">Large</p>
+                <img *ngIf="!parkingLot[6].empty && parkingLot[6].vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle" >
+                <img *ngIf="!parkingLot[6].empty && parkingLot[6].vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan" >
+                <img *ngIf="!parkingLot[6].empty && parkingLot[6].vehicle.name === 'truck' " class="imgSize" src="../../assets/img/truck.png" alt="truck">
+            
+            </div>
+            <div class="col parkingLotBottom">
+                <p class=" text-white">Large</p>
+                <img *ngIf="!parkingLot[7].empty && parkingLot[7].vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle">
+                <img *ngIf="!parkingLot[7].empty && parkingLot[7].vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan" >
+                <img *ngIf="!parkingLot[7].empty && parkingLot[7].vehicle.name === 'truck' " class="imgSize" src="../../assets/img/truck.png" alt="truck">
+            </div>
+            <div class="col parkingLotBottom">
+                <p class=" text-white">Large</p>
+                <img *ngIf="!parkingLot[8].empty && parkingLot[8].vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle" >
+                <img *ngIf="!parkingLot[8].empty && parkingLot[8].vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan">
+                <img *ngIf="!parkingLot[8].empty && parkingLot[8].vehicle.name === 'truck' " class="imgSize" src="../../assets/img/truck.png" alt="truck">
+            </div>
+            <div class="col parkingLotBottom">
+                <p class=" text-white">Large</p>
+                <img *ngIf="!parkingLot[9].empty && parkingLot[9].vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle">
+                <img *ngIf="!parkingLot[9].empty && parkingLot[9].vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan" >
+                <img *ngIf="!parkingLot[9].empty && parkingLot[9].vehicle.name === 'truck' " class="imgSize" src="../../assets/img/truck.png" alt="truck">
+            </div>
+        </div>
+
+    </div>
+    <hr class="hrGrey">
+    <div class="row justify-content-end">
+        <h3>Cola de vehiculos</h3>
+        <div *ngFor="let v of Queue; let i = index" >
+            <img *ngIf="v.vehicle.name === 'motorcycle' " class="imgSize" src="../../assets/img/moto.png" alt="motorcycle" >
+            <img *ngIf="v.vehicle.name === 'sedan' " class="imgSize" src="../../assets/img/sedan.png" alt="sedan" >
+            <img *ngIf="v.vehicle.name === 'truck' " class="imgSize" src="../../assets/img/truck.png" alt="truck">
+        </div>
+    </div>
+</div>
+
+

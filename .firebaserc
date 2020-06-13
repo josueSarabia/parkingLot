@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "parkinglot-86efb": {
+      "hosting": {
+        "parkingLot": [
+          "parkinglot-86efb"
+        ]
+      }
+    }
+  }
+}

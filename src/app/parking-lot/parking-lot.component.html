@@ -1,0 +1,11 @@
+<p>parking-lot works!</p>
+
+<select #selectVehiculos name="vehiculos" id="vehiculos">
+    <option value="truck">Truck</option>
+    <option value="motorcycle">Motorcycle</option>
+    <option value="sedan">Sedan</option>
+</select>
+
+<button (click)="addVehicleToQueue(selectVehiculos.value)" >agregar vehiculo</button>
+<button (click)="deleteVehicleParkingLot()"> elminar vehiculo</button>
+<button (click)="deleteParkingLot()"> vaciar parqueadero</button>
